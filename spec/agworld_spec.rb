@@ -4,6 +4,12 @@ describe "Agworld Requirements" do
   let(:calculator)  { Dentaku::Calculator.new }
 
   it 'should calculate everything correctly' do
+    calculator.bind( :AA => "=3-1" )
+    calculator.memory(:AA).should eq(2)
+
+    calculator.bind( :BB => "=-1+3" )
+    calculator.memory(:BB).should eq(2)
+
     calculator.bind( :B8 => 20 )
     calculator.bind( :B9 => 210 )
     calculator.bind( :B10 => 'Reduced' )
@@ -37,8 +43,8 @@ describe "Agworld Requirements" do
     calculator.bind( :B73 => '=B14*B70/B71/B72' )
     calculator.bind( :B74 => '=B69+B73' )
     calculator.bind( :B75 => '=IF(B74<0,0,IF(B74<5,5,B74))' )
-#   calculator.bind( :B76 => calculator.evaluate( '=IF(B74>39.9,1,IF(B74>15,(B74-40)/-25*20,IF(B74>0,20+(B74-15)/-15*20,IF(B74>-10,40+B74/-10*10,IF(B74>-40,50+(B74+10)/-30*10,IF(B74>-150,60+(B74+40)/-110*20,80))))))' ) )
+    calculator.bind( :B76 => '=IF(B74>39.9,1,IF(B74>15,(B74-40)/-25*20,IF(B74>0,20+(B74-15)/-15*20,IF(B74>-10,40+B74/-10*10,IF(B74>-40,50+(B74+10)/-30*10,IF(B74>-150,60+(B74+40)/-110*20,80))))))' )
     calculator.memory(:B75).should be_within(0.4).of(9)
-#   calculator.memory(:B76).should eq(28)
+    calculator.memory(:B76).should be_within(0.5).of(28)
   end
 end

@@ -6,6 +6,7 @@ module Dentaku
     # tokens
     T_NUMERIC    = TokenMatcher.new(:numeric)
     T_STRING     = TokenMatcher.new(:string)
+    T_UNARY      = TokenMatcher.new(:operator, :unary)
     T_ADDSUB     = TokenMatcher.new(:operator, [:add, :subtract])
     T_MULDIV     = TokenMatcher.new(:operator, [:multiply, :divide])
     T_POW        = TokenMatcher.new(:operator, :pow)
@@ -23,6 +24,7 @@ module Dentaku
 
     # patterns
     P_GROUP      = [T_OPEN,    T_NON_GROUP_STAR, T_CLOSE]
+    P_MATH_UNARY = [T_UNARY,  T_NUMERIC]
     P_MATH_ADD   = [T_NUMERIC, T_ADDSUB,         T_NUMERIC]
     P_MATH_MUL   = [T_NUMERIC, T_MULDIV,         T_NUMERIC]
     P_MATH_POW   = [T_NUMERIC, T_POW,            T_NUMERIC]
@@ -40,6 +42,7 @@ module Dentaku
       [P_ROUND_TWO,  :round],
 
       [P_GROUP,      :evaluate_group],
+      [P_MATH_UNARY, :unary],
       [P_MATH_POW,   :apply],
       [P_MATH_MUL,   :apply],
       [P_MATH_ADD,   :apply],
@@ -125,6 +128,13 @@ module Dentaku
 
       else
         raise "unknown comparator '#{ comparator }'"
+      end
+    end
+
+    def unary(operator, rvalue)
+      r = rvalue.value
+      case operator.value
+      when :unary then Token.new(:numeric, -1 * r)
       end
     end
 

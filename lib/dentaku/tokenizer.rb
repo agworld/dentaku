@@ -58,6 +58,12 @@ module Dentaku
             nesting -= 1 if RPAREN == token
             raise "too many closing parentheses" if nesting < 0
 
+            if token.value == :subtract
+              if tokens.length == 0 || !(tokens.last.is?(:identifier) || tokens.last.is?(:numeric) || tokens.last.value == :close)
+                token = Token.new(token.category, :unary, token.raw_value)
+              end
+            end
+
             tokens << token unless token.is?(:whitespace)
             input.slice!(0, token.length)
 
