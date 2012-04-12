@@ -31,6 +31,7 @@ module Dentaku
         @memory[key_or_hash.to_sym] = value
       else
         key_or_hash.each do |key, value|
+          value = evaluate(value) if value.is_a?(String) && value.strip =~ /^=/
           @memory[key.to_sym] = value if value
         end
       end
