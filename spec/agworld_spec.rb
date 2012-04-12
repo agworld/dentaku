@@ -44,7 +44,27 @@ describe "Agworld Requirements" do
     calculator.bind( :B74 => '=B69+B73' )
     calculator.bind( :B75 => '=IF(B74<0,0,IF(B74<5,5,B74))' )
     calculator.bind( :B76 => '=IF(B74>39.9,1,IF(B74>15,(B74-40)/-25*20,IF(B74>0,20+(B74-15)/-15*20,IF(B74>-10,40+B74/-10*10,IF(B74>-40,50+(B74+10)/-30*10,IF(B74>-150,60+(B74+40)/-110*20,80))))))' )
-    calculator.memory(:B75).should be_within(0.4).of(9)
+    calculator.memory(:B75).should be_within(0.5).of(9)
     calculator.memory(:B76).should be_within(0.5).of(28)
+
+    calculator.bind( :B79 => 12 )
+    calculator.bind( :B80 => 60 )
+    calculator.bind( :B81 => 'Sandy loam' )
+    calculator.bind( :B82 => 2 ) # TODO: vlookup
+    calculator.bind( :B83 => '=B79*B82' )
+    calculator.bind( :B84 => '=4.6*B80^0.393' )
+    calculator.bind( :B85 => '=B84-B83' )
+    calculator.bind( :B86 => '=2.6+0.0012*B80' )
+    calculator.bind( :B87 => '=B85*B86' )
+    calculator.bind( :B88 => '=0.27*B87-0.0008*B87^2' )
+    calculator.bind( :B89 => 3.99 )
+    calculator.bind( :B90 => 0.9 )
+    calculator.bind( :B91 => '=((59690-60*B80+0.03*B80^2)/100000)+0.15' )
+    calculator.bind( :B92 => '=B14*B89/B90/B91' )
+    calculator.bind( :B93 => '=B88+B92' )
+    calculator.bind( :B94 => '=IF(B93<0,0,IF(B93<5,5,B93))' )
+    calculator.bind( :B95 => '=IF(B93>39.9,1,IF(B93>15,(B93-40)/-25*20,IF(B93>0,20+(B93-15)/-15*20,IF(B93>-10,40+B93/-10*10,IF(B93>-40,50+(B93+10)/-30*10,IF(B93>-150,60+(B93+40)/-110*20,80))))))' )
+    calculator.memory(:B94).should be_within(0.05).of(10.1)
+    calculator.memory(:B95).should be_within(0.5).of(27)
   end
 end
