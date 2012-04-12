@@ -35,9 +35,9 @@ module Dentaku
         when '='  then :eq
         end
       end),
-      TokenScanner.new(:combinator, '(and|or)\b',   lambda {|raw| raw.strip.downcase.to_sym }),
-      TokenScanner.new(:function,   '(if|round)\b', lambda {|raw| raw.strip.to_sym }),
-      TokenScanner.new(:identifier, '[a-z_]+',      lambda {|raw| raw.downcase.to_sym })
+      TokenScanner.new(:combinator, '(and|or)\b', lambda {|raw| raw.strip.downcase.to_sym }),
+      TokenScanner.new(:function,   '(if|round)\b', lambda {|raw| raw.strip.downcase.to_sym }),
+      TokenScanner.new(:identifier, '[a-z_][a-z0-9_]*', lambda {|raw| raw.strip.to_sym })
     ]
 
     LPAREN = TokenMatcher.new(:grouping, :open)
