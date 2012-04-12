@@ -69,6 +69,7 @@ module Dentaku
       end
 
       raise "too many opening parentheses" if nesting > 0
+      tokens.shift if tokens.length > 0 && tokens.first.raw_value == '='
       tokens
     end
   end
